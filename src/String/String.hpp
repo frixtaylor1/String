@@ -3,12 +3,11 @@
 #include "../Allocator/String/StringAllocator.hpp"
 #include <ostream>
 #include <cstring>
+#include <assert.h>
 
 // String Class-------------------------------------------------->>
 namespace frix
 {
-    StringAllocator allocator;
-
     class String
     {
     public:
@@ -16,19 +15,14 @@ namespace frix
         /**
          * @contructor: filled
          * 
-         * @param <const char*> str  
+         * @param: <const char*> str  
          */    
-        String(const char *str) {
-            m_str = (char *)(allocator.allocate(strlen(str) + 1));
-            strcpy(m_str, str);
-        }
+        String(const char *str);
 
         /**
          * @destructor: "deallocating" static mem 
          */
-        ~String() {
-            allocator.deallocate(m_str);
-        }
+        ~String();
 
         /**
          * @contructor: void 
@@ -38,17 +32,17 @@ namespace frix
         /**
          * @contructor: copy 
          */
-        String(const String &str) {
-            m_str = str.m_str;
-        }
+        String(const String &str);
 
         /**
          * @contructor: move 
          */
-        String(String &&str)
-            : m_str{str.m_str} {
-            str.m_str = nullptr;
-        }
+        String(String &&str);
+
+        /**
+         * @method: concat 
+         */
+        String concat(const char* str) const;
 
         /**
          * @todo: Operations with strings...
@@ -65,14 +59,9 @@ namespace frix
          * @method: toUpperCase
         **/
 
-        friend std::ostream &operator<<(std::ostream &stream, const String &str);
         char *m_str;
     };
 
     // Operator overloading------------------------------------------>>
-    std::ostream &operator<<(std::ostream &stream, const String &str)
-    {
-        stream << str.m_str;
-        return stream;
-    }
+    std::ostream &operator<<(std::ostream &stream, const String &str);
 }
