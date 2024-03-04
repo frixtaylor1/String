@@ -3,9 +3,12 @@
 #include "../IAllocator.hpp"
 
 #include <new>
-
-#ifdef DEBUG_MEM
 #include <iostream>
+
+#ifdef EMBEDDED_SYSTEM
+    #define EMBEDDED_SYSTEM_ENABLED 1
+#else
+    #define EMBEDDED_SYSTEM_ENABLED 0
 #endif
 
 namespace frix {
@@ -16,23 +19,24 @@ namespace frix {
         }
 
         void* allocate(size_t size) {
-            for (int i = 0; i < nbFreeblocks; ++i) {
-                if ((size_t)(freeBlocks[i + 1]) - (size_t)(freeBlocks[i]) >= size) {
-                    void* ptr = freeBlocks[i];
-                    for (int j = i; j < nbFreeblocks - 1; ++j) {
-                        freeBlocks[j] = freeBlocks[j + 1];
-                    }
-                    nbFreeblocks--;
+            if (EMBEDDED_SYSTEM_ENABLED) {
+                if (nbFreeblocks < DEFAULT_MAX_SIZE) {
+                    void* ptr = &freeBlocks[nbFreeblocks++];
                     return ptr;
+                } else {
+                    return nullptr;
                 }
+            } else {
+                void* ptr = ::operator new(size);
+                return ptr;
             }
-            void* ptr = ::operator new(size);
-            return ptr;
         }
 
         void deallocate(void* ptr) {
             debugMem();
-            freeBlocks[nbFreeblocks++] = ptr;
+            if (nbFreeblocks < DEFAULT_MAX_SIZE) {
+                freeBlocks[nbFreeblocks++] = ptr;
+            }
         }
 
     private:

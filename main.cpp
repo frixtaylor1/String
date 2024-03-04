@@ -15,5 +15,7 @@ int main()
     String str73 = "Hello, World!!!";
     std::cout << str73 << std::endl;
 
+    std::cout << str73.concat(" It's a beautifull day!") << std::endl;
+
     return 0;
 }

@@ -11,7 +11,6 @@ namespace frix
     class String
     {
     public:
-
         /**
          * @contructor: filled
          * 
@@ -40,24 +39,136 @@ namespace frix
         String(String &&str);
 
         /**
-         * @method: concat 
+         * @method: concat
+         * 
+         * @param c_string str 
+         * 
+         * @returns `frix::String`
          */
         String concat(const char* str) const;
 
         /**
-         * @todo: Operations with strings...
-         *
-         * @method: Contact
-         * @method: Includes
          * @method: endsWith
+         * 
+         * @param c_string str
+         * 
+         * @returns `bool` 
+         */
+        bool endsWith(const char* str);
+
+        /**
          * @method: beginsWith
+         * 
+         * @param c_string str
+         * 
+         * @returns `bool` 
+         */
+        bool beginsWith(const char* str);
+
+        /**
+         * @method: includes
+         * 
+         * @param c_string str
+         * 
+         * @returns `bool` 
+         */
+        bool includes(const char* str);
+
+        /**
          * @method: replace
+         * 
+         * @param c_string str
+         * 
+         * @returns `void` 
+         */
+        void replace(const char* str);
+
+        /**
+         * @method: replace
+         * 
+         * @param c_string str
+         * 
+         * @returns `String` 
+         */
+        String replace(const char* str) const;
+
+        /**
          * @method: trim
+         * 
+         * @returns `String` 
+         */
+        String trim() const;
+
+        /**
+         * @method: trim
+         * 
+         * @returns `void` 
+         */
+        void trim();
+
+        /**
          * @method: trimStart
+         * 
+         * @returns `String` 
+         */
+        String trimStart() const;
+
+        /**
+         * @method: trimStart
+         * 
+         * @returns `void` 
+         */
+        void trimStart();
+
+        /**
          * @method: trimEnd
+         * 
+         * @returns `String` 
+         */
+        String trimEnd() const;
+
+        /**
+         * @method: trimEnd
+         * 
+         * @returns `void` 
+         */
+        void trimEnd();
+
+        /**
          * @method: toLowerCase
+         * 
+         * @returns `String` 
+         */
+        String toLowerCase() const;
+
+        /**
+         * @method: toLowerCase
+         * 
+         * @returns `void` 
+         */
+        void toLowerCase();
+
+        /**
          * @method: toUpperCase
+         * 
+         * @returns `String` 
+         */
+        String toUpperCase() const;
+
+        /**
+         * @method: toUpperCase
+         * 
+         * @returns `void` 
+         */
+        void toUpperCase();
+
+        /**
+         * @todo: Implement the defined member functions...
+         *
         **/
+
+    protected:
+        void replaceImpl(const char* str);
 
         char *m_str;
     };
